@@ -30,7 +30,8 @@ func TestBuildWithCtx(t *testing.T) {
 	if _, err := buildWithCtx(cctx, func() (int, error) { return 1, nil }, func(int) {}); !errors.Is(err, context.Canceled) {
 		t.Fatal(err)
 	}
-	if ctxOrBackground(nil) == nil { //nolint:staticcheck
+	//lint:ignore SA1012 intentional nil context in test
+	if ctxOrBackground(nil) == nil {
 		t.Fatal("nil ctx must become Background")
 	}
 
@@ -94,7 +95,8 @@ func TestNewProducerWithRetry_ctxCancelStopsRetry(t *testing.T) {
 	if _, err := NewProducerWithRetry(ctx, ProducerConfig{Address: "a:1"}); err == nil || calls.Load() != 0 {
 		t.Fatal(err, calls.Load())
 	}
-	if _, err := NewProducerWithRetry(nil, ProducerConfig{}); err == nil { //nolint:staticcheck
+	//lint:ignore SA1012 intentional nil context in test
+	if _, err := NewProducerWithRetry(nil, ProducerConfig{}); err == nil {
 		t.Fatal("expected validation error")
 	}
 }
@@ -119,7 +121,8 @@ func TestNewConsumer_ctxCancelled(t *testing.T) {
 	close(release)
 	<-exited // the background goroutine must finish before the seam is restored
 
-	if _, err := NewConsumer(nil, &Topology{Topic: "t", Channel: "c"}, ConsumerConfig{}, nil); err == nil { //nolint:staticcheck
+	//lint:ignore SA1012 intentional nil context in test
+	if _, err := NewConsumer(nil, &Topology{Topic: "t", Channel: "c"}, ConsumerConfig{}, nil); err == nil {
 		t.Fatal("expected validation error")
 	}
 }
@@ -135,7 +138,8 @@ func TestRetryManager_ctxPaths(t *testing.T) {
 	if err := rm.execute(ctx2, func(context.Context) error { cancel2(); return errors.New("x") }); !errors.Is(err, context.Canceled) {
 		t.Fatal(err)
 	}
-	if err := rm.execute(nil, func(context.Context) error { return nil }); err != nil { //nolint:staticcheck
+	//lint:ignore SA1012 intentional nil context in test
+	if err := rm.execute(nil, func(context.Context) error { return nil }); err != nil {
 		t.Fatal(err)
 	}
 	if err := rm.sleep(context.Background(), 0); err != nil {
