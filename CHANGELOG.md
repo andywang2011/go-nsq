@@ -7,6 +7,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-11-09
+
+### Added
+
+- `Client` process-scoped helper: `NewClient(producer, lookup)`, `Publish` / `MultiPublish` / `DeferredPublish`, `Close`, and `NewConsumer(ctx, *Topology, handler)` using stored lookup config.
+
 ## [0.2.0] - 2026-11-07
 
 ### Breaking
