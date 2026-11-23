@@ -1,6 +1,6 @@
 module github.com/andywang2011/go-nsq
 
-go 1.27.3
+go 1.27.4
 
 require (
 	github.com/nsqio/go-nsq v1.1.0
